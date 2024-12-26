@@ -7,11 +7,10 @@ namespace Lab3.Models
 {
     public static class ReportGenerator
     {
-        // Ведомость выполненных заказов
         public static List<OrderReport> GetCompletedOrdersReport(DataContext context)
         {
             var completedOrders = context.Orders
-                .Where(o => o.IsCompleted && o.OrderDate.Month == DateTime.Now.Month) // Фильтруем по текущему месяцу
+                .Where(o => o.IsCompleted && o.OrderDate.Month == DateTime.Now.Month)
                 .GroupBy(o => o.Product.Name)
                 .Select(g => new OrderReport
                 {
@@ -24,11 +23,10 @@ namespace Lab3.Models
             return completedOrders;
         }
 
-        // Ведомость невыполненных заказов
         public static List<OrderReport> GetPendingOrdersReport(DataContext context)
         {
             var pendingOrders = context.Orders
-                .Where(o => !o.IsCompleted && o.OrderDate.Month == DateTime.Now.Month) // Фильтруем по текущему месяцу
+                .Where(o => !o.IsCompleted && o.OrderDate.Month == DateTime.Now.Month)
                 .GroupBy(o => o.Product.Name)
                 .Select(g => new OrderReport
                 {
